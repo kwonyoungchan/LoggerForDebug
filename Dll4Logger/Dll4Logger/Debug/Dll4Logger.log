@@ -1,0 +1,19 @@
+﻿  pch.cpp
+  Logger.cpp
+C:\Users\ycKwon\source\repos\Dll4Logger\Dll4Logger\Logger.h(41,17): warning C4251: 'CLogger::logFilename': 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'에서는 'CLogger'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+C:\Users\ycKwon\source\repos\Dll4Logger\Dll4Logger\Logger.h(43,19): warning C4251: 'CLogger::logFile': 'std::basic_ofstream<char,std::char_traits<char>>'에서는 'CLogger'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+C:\Users\ycKwon\source\repos\Dll4Logger\Dll4Logger\Logger.h(44,16): warning C4251: 'CLogger::logMutex': 'std::mutex'에서는 'CLogger'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.40.33807\include\filesystem(12): warning STL4038: The contents of <filesystem> are available only with C++17 or later.
+C:\Users\ycKwon\source\repos\Dll4Logger\Dll4Logger\Logger.cpp(8,19): warning C4273: 'CLogger::getInstance': dll 연결이 일치하지 않습니다.
+C:\Users\ycKwon\source\repos\Dll4Logger\Dll4Logger\Logger.cpp(13,10): warning C4273: 'CLogger::CLogger': dll 연결이 일치하지 않습니다.
+C:\Users\ycKwon\source\repos\Dll4Logger\Dll4Logger\Logger.cpp(14,11): warning C4273: 'CLogger::~CLogger': dll 연결이 일치하지 않습니다.
+C:\Users\ycKwon\source\repos\Dll4Logger\Dll4Logger\Logger.cpp(20,15): warning C4273: 'CLogger::configureLogging': dll 연결이 일치하지 않습니다.
+C:\Users\ycKwon\source\repos\Dll4Logger\Dll4Logger\Logger.cpp(32,15): warning C4273: 'CLogger::logException': dll 연결이 일치하지 않습니다.
+C:\Users\ycKwon\source\repos\Dll4Logger\Dll4Logger\Logger.cpp(42,15): warning C4273: 'CLogger::logMessage': dll 연결이 일치하지 않습니다.
+C:\Users\ycKwon\source\repos\Dll4Logger\Dll4Logger\Logger.cpp(51,22): warning C4273: 'CLogger::extractFileName': dll 연결이 일치하지 않습니다.
+C:\Users\ycKwon\source\repos\Dll4Logger\Dll4Logger\Logger.cpp(63,15): warning C4273: 'CLogger::writeLog': dll 연결이 일치하지 않습니다.
+C:\Users\ycKwon\source\repos\Dll4Logger\Dll4Logger\Logger.cpp(72,22): warning C4273: 'CLogger::getCurrentTime': dll 연결이 일치하지 않습니다.
+     C:\Users\ycKwon\source\repos\Dll4Logger\Dll4Logger\Debug\Dll4Logger.lib 라이브러리 및 C:\Users\ycKwon\source\repos\Dll4Logger\Dll4Logger\Debug\Dll4Logger.exp 개체를 생성하고 있습니다.
+  Dll4Logger.vcxproj -> C:\Users\ycKwon\source\repos\Dll4Logger\Dll4Logger\Debug\Dll4Logger.dll
+  'pwsh.exe'은(는) 내부 또는 외부 명령, 실행할 수 있는 프로그램, 또는
+  배치 파일이 아닙니다.

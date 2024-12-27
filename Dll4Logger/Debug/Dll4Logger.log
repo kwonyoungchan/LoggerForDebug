@@ -1,0 +1,24 @@
+﻿  Logger.cpp
+C:\Users\ycKwon\source\repos\DLL4Logger\Dll4Logger\Logger.h(50,17): warning C4251: 'CLogger::logFilename': 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'에서는 'CLogger'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+C:\Users\ycKwon\source\repos\DLL4Logger\Dll4Logger\Logger.h(52,19): warning C4251: 'CLogger::logFile': 'std::basic_ofstream<char,std::char_traits<char>>'에서는 'CLogger'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+C:\Users\ycKwon\source\repos\DLL4Logger\Dll4Logger\Logger.h(53,16): warning C4251: 'CLogger::logMutex': 'std::mutex'에서는 'CLogger'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+C:\Users\ycKwon\source\repos\DLL4Logger\Dll4Logger\Logger.h(67,17): warning C4251: 'CException::message': 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'에서는 'CException'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+C:\Users\ycKwon\source\repos\DLL4Logger\Dll4Logger\Logger.cpp(14,19): warning C4273: 'CLogger::getInstance': dll 연결이 일치하지 않습니다.
+C:\Users\ycKwon\source\repos\DLL4Logger\Dll4Logger\Logger.cpp(19,10): warning C4273: 'CLogger::CLogger': dll 연결이 일치하지 않습니다.
+C:\Users\ycKwon\source\repos\DLL4Logger\Dll4Logger\Logger.cpp(20,11): warning C4273: 'CLogger::~CLogger': dll 연결이 일치하지 않습니다.
+C:\Users\ycKwon\source\repos\DLL4Logger\Dll4Logger\Logger.cpp(31,15): warning C4273: 'CLogger::configureLogging': dll 연결이 일치하지 않습니다.
+C:\Users\ycKwon\source\repos\DLL4Logger\Dll4Logger\Logger.cpp(78,15): warning C4273: 'CLogger::logException': dll 연결이 일치하지 않습니다.
+C:\Users\ycKwon\source\repos\DLL4Logger\Dll4Logger\Logger.cpp(97,15): warning C4273: 'CLogger::logMessage': dll 연결이 일치하지 않습니다.
+C:\Users\ycKwon\source\repos\DLL4Logger\Dll4Logger\Logger.cpp(112,22): warning C4273: 'CLogger::extractFileName': dll 연결이 일치하지 않습니다.
+C:\Users\ycKwon\source\repos\DLL4Logger\Dll4Logger\Logger.cpp(128,15): warning C4273: 'CLogger::writeLog': dll 연결이 일치하지 않습니다.
+C:\Users\ycKwon\source\repos\DLL4Logger\Dll4Logger\Logger.cpp(145,22): warning C4273: 'CLogger::getCurrentTime': dll 연결이 일치하지 않습니다.
+C:\Users\ycKwon\source\repos\DLL4Logger\Dll4Logger\Logger.cpp(157,22): warning C4273: 'CLogger::logLevelToString': dll 연결이 일치하지 않습니다.
+C:\Users\ycKwon\source\repos\DLL4Logger\Dll4Logger\Logger.cpp(168,13): warning C4273: 'CException::CException': dll 연결이 일치하지 않습니다.
+C:\Users\ycKwon\source\repos\DLL4Logger\Dll4Logger\Logger.cpp(173,32): warning C4273: 'CException::what': dll 연결이 일치하지 않습니다.
+C:\Users\ycKwon\source\repos\DLL4Logger\Dll4Logger\Logger.cpp(178,13): warning C4273: 'CException::CException': dll 연결이 일치하지 않습니다.
+C:\Users\ycKwon\source\repos\DLL4Logger\Dll4Logger\Logger.cpp(182,14): warning C4273: 'CException::~CException': dll 연결이 일치하지 않습니다.
+C:\Users\ycKwon\source\repos\DLL4Logger\Dll4Logger\Logger.cpp(186,13): warning C4273: 'CException::CException': dll 연결이 일치하지 않습니다.
+     C:\Users\ycKwon\source\repos\DLL4Logger\Debug\Dll4Logger.lib 라이브러리 및 C:\Users\ycKwon\source\repos\DLL4Logger\Debug\Dll4Logger.exp 개체를 생성하고 있습니다.
+  Dll4Logger.vcxproj -> C:\Users\ycKwon\source\repos\DLL4Logger\Debug\Dll4Logger.dll
+  'pwsh.exe'은(는) 내부 또는 외부 명령, 실행할 수 있는 프로그램, 또는
+  배치 파일이 아닙니다.
