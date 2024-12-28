@@ -47,9 +47,9 @@ private:
     std::string getCurrentTime() const;
     std::string logLevelToString(ELogLevel eLogLevel);
 
-    std::string logFilename;
-    bool saveToFile;
-    std::ofstream logFile;
+    std::string logFilename ="";
+    bool saveToFile = false;
+    std::ofstream* logFile = nullptr;
     std::mutex logMutex;
 };
 

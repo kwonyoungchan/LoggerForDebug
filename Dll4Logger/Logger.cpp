@@ -7,6 +7,8 @@
 #else
 #include <direct.h>
 #include <io.h>
+#include <locale>
+#include <codecvt>
 #endif
 
 
@@ -16,10 +18,19 @@ CLogger& CLogger::getInstance() {
     return instance;
 }
 
-CLogger::CLogger() : saveToFile(false) {}
+CLogger::CLogger()
+{
+    // UTF-8 인코딩 설정
+    // ofstream 인스턴스가 생성되기 전에 인코딩을 설정해야 한다. 
+    std::locale::global(std::locale("Korean"));
+    logFile = new std::ofstream();
+    saveToFile = false;
+}
 CLogger::~CLogger() {
-    if (logFile.is_open()) {
-        logFile.close();
+    if (logFile->is_open())
+    {
+        logFile->close();
+        delete logFile;
     }
 }
 
@@ -30,6 +41,7 @@ CLogger::~CLogger() {
 /// <param name="enableFileLogging: 로그를 파일에 저장 유무 선택"></param>
 void CLogger::configureLogging(const char* filename, bool enableFileLogging) {
     std::lock_guard<std::mutex> lock(logMutex);
+
     
 #if __cplusplus >= 201703L              // C++17 이상일 때
     filesystem::CurrentDir
@@ -59,10 +71,11 @@ void CLogger::configureLogging(const char* filename, bool enableFileLogging) {
     // "Log" 디렉토리 생성 (없으면 생성)
     logFilename = logDir + "/" + filename;
     saveToFile = enableFileLogging;
+    
 
     if (saveToFile) {
-        logFile.open(logFilename, std::ios::trunc);
-        if (!logFile.is_open()) {
+        logFile->open(logFilename, std::ios::app);
+        if (!logFile->is_open()) {
             throw std::runtime_error("Unable to open log file: " + logFilename);
         }
     }
@@ -128,9 +141,9 @@ std::string CLogger::extractFileName(const std::string& filePath) const {
 void CLogger::writeLog(const std::string& logEntry) {
     // 멀티스레드 환경에서 여러 스레드가 동시에 공유 자원에 접근하는 것을 막기 위해 사용함 
     std::lock_guard<std::mutex> lock(logMutex);
-    if (saveToFile && logFile.is_open()) {
-        logFile << logEntry;
-        logFile.flush();
+    if (saveToFile && logFile->is_open()) {
+        *logFile << logEntry;
+        logFile->flush();
     }
     std::cout << logEntry;
 
