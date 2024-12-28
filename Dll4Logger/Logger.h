@@ -1,4 +1,4 @@
-// CLogger.h
+ï»¿// CLogger.h
 #ifndef CLogger_H
 #define CLogger_H
 
@@ -9,7 +9,7 @@
 #include <chrono>
 #include <sstream>
 
-// ³»º¸³»±â ¸ÅÅ©·Î Á¤ÀÇ
+// ë‚´ë³´ë‚´ê¸° ë§¤í¬ë¡œ ì •ì˜
 #ifdef _WIN32
 #ifdef BUILD_DLL
 #define DLLEXPORT __declspec(dllexport)
@@ -20,7 +20,7 @@
 #define DLLEXPORT
 #endif
 
-// ·Î±× Á¾·ù ¿­°ÅÀÚ 
+// ë¡œê·¸ ì¢…ë¥˜ ì—´ê±°ì 
 enum class ELogLevel {
     LOG_DEBUG,
     LOG_INFO,
@@ -38,7 +38,7 @@ public:
 private:
     CLogger();
     ~CLogger();
-    // ÇØ´ç Å¬·¡½º´Â ½Ì±ÛÅæ ÆĞÅÏÀÌ¹Ç·Î º¹»ç¿Í ´ëÀÔÀ» Â÷´Ü
+    // í•´ë‹¹ í´ë˜ìŠ¤ëŠ” ì‹±ê¸€í†¤ íŒ¨í„´ì´ë¯€ë¡œ ë³µì‚¬ì™€ ëŒ€ì…ì„ ì°¨ë‹¨
     CLogger(const CLogger&) = delete;
     CLogger& operator=(const CLogger&) = delete;
 
@@ -53,7 +53,7 @@ private:
     std::mutex logMutex;
 };
 
-// ¿¹¿Ü ¸Ş½ÃÁö Å¬·¡½º
+// ì˜ˆì™¸ ë©”ì‹œì§€ í´ë˜ìŠ¤
 class DLLEXPORT CException {
 public:
     explicit CException(const std::string& msg); 
@@ -66,7 +66,7 @@ public:
 private:
     std::string message;
 };
-// ¸ÅÅ©·Î Á¤ÀÇ
+// ë§¤í¬ë¡œ ì •ì˜
 #define LOG_EXCEPTION(message) CLogger::getInstance().logException(message, __FUNCTION__, __FILE__, __LINE__)
 #define LOG_MESSAGE(logLevel, message) CLogger::getInstance().logMessage(logLevel,message, __FUNCTION__, __FILE__, __LINE__)
 

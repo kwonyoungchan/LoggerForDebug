@@ -30,3 +30,6 @@
 *.exe
 *.out
 *.app
+/.vs
+/Dll4Logger/Build
+/Dll4Logger/Debug
