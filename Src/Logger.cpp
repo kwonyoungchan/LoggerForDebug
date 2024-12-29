@@ -1,7 +1,5 @@
 ﻿#include "pch.h"
-#ifdef _AFX 
-#include "stdafx.h" 
-#endif
+
 #include "Logger.h"
 #include <ctime>
 #include <iostream>
@@ -46,7 +44,7 @@ void CLogger::configureLogging(const char* filename, bool enableFileLogging) {
     logDir = "Log";
     if (!fs::exists(logDir)) {
         fs::create_directory(logDir);
-}
+    }
 
 
 #else                                   // C++14 일 때
@@ -70,9 +68,9 @@ void CLogger::configureLogging(const char* filename, bool enableFileLogging) {
     // "Log" 디렉토리 생성 (없으면 생성)
     logFilename = logDir + "/" + filename;
     saveToFile = enableFileLogging;
-    
 
-    if (saveToFile)
+
+    if (saveToFile) 
     {
         std::ofstream logFile;
         logFile.open(logFilename, std::ios::trunc);
@@ -81,7 +79,24 @@ void CLogger::configureLogging(const char* filename, bool enableFileLogging) {
         }
         logFile.close();
     }
+}
 
+/// <summary>
+/// 예외가 발생했을 때, 메시지 반환 함수
+/// </summary>
+/// <param name="message"></param>
+/// <param name="functionName"></param>
+/// <param name="fileName"></param>
+/// <param name="lineNumber"></param>
+void CLogger::logException(const std::string& message, const char* functionName,
+    const char* fileName, int lineNumber) {
+    std::ostringstream logStream;
+    logStream << "[" << logLevelToString(ELogLevel::LOG_ERROR) << "]";
+    logStream << "[" << getCurrentTime() << "] ";
+    logStream << "Message: " << message;
+    logStream << "(Exception in " << functionName;
+    logStream << " at " << extractFileName(fileName) << ":" << lineNumber << ")" << "\n";
+    writeLog(logStream.str());
 }
 
 /// <summary>
@@ -92,30 +107,13 @@ void CLogger::configureLogging(const char* filename, bool enableFileLogging) {
 /// <param name="functionName"></param>
 /// <param name="fileName"></param>
 /// <param name="lineNumber"></param>
-void CLogger::logMessage(ELogLevel eLoglevel, const std::string& message, const char* functionName,
+void CLogger::logMessage(ELogLevel eLoglevl, const std::string& message, const char* functionName,
     const char* fileName, int lineNumber) {
     std::ostringstream logStream;
-
     logStream << "[" << getCurrentTime() << "]\t ";
-    logStream << "[" << logLevelToString(eLoglevel) << "]\t";
-    switch (eLoglevel)
-    {
-    case ELogLevel::LOG_DEBUG:
-        logStream << "==> " << message;
-        break;
-    case ELogLevel::LOG_INFO:
-        logStream << "\t--> " << message;
-        break;
-    case ELogLevel::LOG_WARNING:
-        logStream << "** " << message;
-        break;
-    case ELogLevel::LOG_ERROR:
-        logStream << "!! " << message;
-        break;
-    }
-
-    logStream<<  " (Log from " << functionName
-    << " at " << extractFileName(fileName) << ":" << lineNumber << ")\n";
+    logStream << "[" << logLevelToString(eLoglevl) << "]\t";
+    logStream << message << "(Logged from " << functionName
+        << " at " << extractFileName(fileName) << ":" << lineNumber << ")\n";
     writeLog(logStream.str());
 }
 
@@ -144,7 +142,7 @@ void CLogger::writeLog(const std::string& logEntry) {
     // 멀티스레드 환경에서 여러 스레드가 동시에 공유 자원에 접근하는 것을 막기 위해 사용함 
     std::lock_guard<std::mutex> lock(logMutex);
     std::ofstream logFile;
-    logFile.open(logFilename, std::ios::app);
+    logFile.open(logFilename,std::ios::app);
     if (saveToFile && logFile.is_open()) {
         logFile.write(logEntry.c_str(), logEntry.size());
         logFile.close();

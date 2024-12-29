@@ -1,12 +1,9 @@
-ï»¿#include "pch.h"
-#ifdef _AFX 
-#include "stdafx.h" 
-#endif
+#include "pch.h"
 #include "Logger.h"
 #include <ctime>
 #include <iostream>
 #include <locale>
-#if __cplusplus >= 201703L  // C++20 ì´ìƒ
+#if __cplusplus >= 201703L  // C++20 ÀÌ»ó
 #include <filesystem>
 namespace fs = std::filesystem;
 #else
@@ -16,7 +13,7 @@ namespace fs = std::filesystem;
 #endif
 
 
-// Singleton ì¸ìŠ¤í„´ìŠ¤ ë°˜í™˜
+// Singleton ÀÎ½ºÅÏ½º ¹İÈ¯
 CLogger& CLogger::getInstance() {
     static CLogger instance;
     return instance;
@@ -24,8 +21,8 @@ CLogger& CLogger::getInstance() {
 
 CLogger::CLogger()
 {
-    // UTF-8 ì¸ì½”ë”© ì„¤ì •
-    // ofstream ì¸ìŠ¤í„´ìŠ¤ê°€ ìƒì„±ë˜ê¸° ì „ì— ì¸ì½”ë”©ì„ ì„¤ì •í•´ì•¼ í•œë‹¤. 
+    // UTF-8 ÀÎÄÚµù ¼³Á¤
+    // ofstream ÀÎ½ºÅÏ½º°¡ »ı¼ºµÇ±â Àü¿¡ ÀÎÄÚµùÀ» ¼³Á¤ÇØ¾ß ÇÑ´Ù. 
     std::locale::global(std::locale("Korean"));
     saveToFile = false;
 }
@@ -33,44 +30,44 @@ CLogger::~CLogger() {
 }
 
 /// <summary>
-/// ë””ë²„ê·¸ ë¡œê·¸ í…ìŠ¤íŠ¸ íŒŒì¼ ìƒì„± í•¨ìˆ˜
+/// µğ¹ö±× ·Î±× ÅØ½ºÆ® ÆÄÀÏ »ı¼º ÇÔ¼ö
 /// </summary>
-/// <param name="filename : ìƒì„±í•  ë¡œê·¸íŒŒì¼ ì´ë¦„"></param>
-/// <param name="enableFileLogging: ë¡œê·¸ë¥¼ íŒŒì¼ì— ì €ì¥ ìœ ë¬´ ì„ íƒ"></param>
+/// <param name="filename : »ı¼ºÇÒ ·Î±×ÆÄÀÏ ÀÌ¸§"></param>
+/// <param name="enableFileLogging: ·Î±×¸¦ ÆÄÀÏ¿¡ ÀúÀå À¯¹« ¼±ÅÃ"></param>
 void CLogger::configureLogging(const char* filename, bool enableFileLogging) {
     std::lock_guard<std::mutex> lock(logMutex);
 
     std::string logDir;
 
-#if __cplusplus >= 201703L              // C++17 ì´ìƒì¼ ë•Œ    
+#if __cplusplus >= 201703L              // C++17 ÀÌ»óÀÏ ¶§    
     logDir = "Log";
     if (!fs::exists(logDir)) {
         fs::create_directory(logDir);
-}
+    }
 
 
-#else                                   // C++14 ì¼ ë•Œ
-    // í˜„ì¬ ì‘ì—… ë””ë ‰í† ë¦¬ ê°€ì ¸ì˜¤ê¸°
+#else                                   // C++14 ÀÏ ¶§
+    // ÇöÀç ÀÛ¾÷ µğ·ºÅä¸® °¡Á®¿À±â
     char currentDir[FILENAME_MAX];
     if (_getcwd(currentDir, sizeof(currentDir)) == nullptr) {
         throw std::runtime_error("Failed to get current working directory.");
     }
 
-    // "Log" ë””ë ‰í† ë¦¬ ê²½ë¡œ ì„¤ì •
+    // "Log" µğ·ºÅä¸® °æ·Î ¼³Á¤
     logDir = std::string(currentDir) + "/Log";
     struct stat info;
-    if (stat(logDir.c_str(), &info) != 0 || !(info.st_mode & S_IFDIR)) { // ë””ë ‰í† ë¦¬ ì¡´ì¬ ì—¬ë¶€ í™•ì¸
-        if (_mkdir(logDir.c_str()) != 0) { // ë””ë ‰í† ë¦¬ ìƒì„±
+    if (stat(logDir.c_str(), &info) != 0 || !(info.st_mode & S_IFDIR)) { // µğ·ºÅä¸® Á¸Àç ¿©ºÎ È®ÀÎ
+        if (_mkdir(logDir.c_str()) != 0) { // µğ·ºÅä¸® »ı¼º
             throw std::runtime_error("Unable to create directory: " + logDir);
         }
     }
 
 
 #endif
-    // "Log" ë””ë ‰í† ë¦¬ ìƒì„± (ì—†ìœ¼ë©´ ìƒì„±)
+    // "Log" µğ·ºÅä¸® »ı¼º (¾øÀ¸¸é »ı¼º)
     logFilename = logDir + "/" + filename;
     saveToFile = enableFileLogging;
-    
+
 
     if (saveToFile)
     {
@@ -85,7 +82,7 @@ void CLogger::configureLogging(const char* filename, bool enableFileLogging) {
 }
 
 /// <summary>
-/// ë¡œê·¸ ë©”ì‹œì§€ í‘œì¶œ í•¨ìˆ˜
+/// ·Î±× ¸Ş½ÃÁö Ç¥Ãâ ÇÔ¼ö
 /// </summary>
 /// <param name="eLoglevl"></param>
 /// <param name="message"></param>
@@ -114,13 +111,13 @@ void CLogger::logMessage(ELogLevel eLoglevel, const std::string& message, const 
         break;
     }
 
-    logStream<<  " (Log from " << functionName
-    << " at " << extractFileName(fileName) << ":" << lineNumber << ")\n";
+    logStream << " (Log from " << functionName
+        << " at " << extractFileName(fileName) << ":" << lineNumber << ")\n";
     writeLog(logStream.str());
 }
 
 /// <summary>
-/// ì „ì²´ íŒŒì¼ ë””ë ‰í† ë¦¬ ì¤‘ì— ë§ˆì§€ë§‰ íŒŒì¼ ì´ë¦„ë§Œ ì˜ë¼ì„œ ë°˜í™˜
+/// ÀüÃ¼ ÆÄÀÏ µğ·ºÅä¸® Áß¿¡ ¸¶Áö¸· ÆÄÀÏ ÀÌ¸§¸¸ Àß¶ó¼­ ¹İÈ¯
 /// </summary>
 /// <param name="filePath"></param>
 /// <returns></returns>
@@ -137,11 +134,11 @@ std::string CLogger::extractFileName(const std::string& filePath) const {
 }
 
 /// <summary>
-/// ë¡œê·¸ ë‚´ìš©ì„ ë¡œê·¸íŒŒì¼, ì‹¤í–‰ì°½ì— ì „ì‹œ
+/// ·Î±× ³»¿ëÀ» ·Î±×ÆÄÀÏ, ½ÇÇàÃ¢¿¡ Àü½Ã
 /// </summary>
 /// <param name="logEntry"></param>
 void CLogger::writeLog(const std::string& logEntry) {
-    // ë©€í‹°ìŠ¤ë ˆë“œ í™˜ê²½ì—ì„œ ì—¬ëŸ¬ ìŠ¤ë ˆë“œê°€ ë™ì‹œì— ê³µìœ  ìì›ì— ì ‘ê·¼í•˜ëŠ” ê²ƒì„ ë§‰ê¸° ìœ„í•´ ì‚¬ìš©í•¨ 
+    // ¸ÖÆ¼½º·¹µå È¯°æ¿¡¼­ ¿©·¯ ½º·¹µå°¡ µ¿½Ã¿¡ °øÀ¯ ÀÚ¿ø¿¡ Á¢±ÙÇÏ´Â °ÍÀ» ¸·±â À§ÇØ »ç¿ëÇÔ 
     std::lock_guard<std::mutex> lock(logMutex);
     std::ofstream logFile;
     logFile.open(logFilename, std::ios::app);
@@ -151,19 +148,19 @@ void CLogger::writeLog(const std::string& logEntry) {
     }
     std::cout << logEntry;
 
-    // mutex ì ê¸ˆ í•´ì œë¨ 
+    // mutex Àá±İ ÇØÁ¦µÊ 
 }
 
 /// <summary>
-/// í˜„ì¬ ì‹œê°„ ì •ë³´ ë°˜í™˜
-/// ì¶” í›„, milliseconds ë‹¨ìœ„ë¡œ ì¸¡ì •ë˜ë„ë¡ ê°œì„  ì˜ˆì •
+/// ÇöÀç ½Ã°£ Á¤º¸ ¹İÈ¯
+/// Ãß ÈÄ, milliseconds ´ÜÀ§·Î ÃøÁ¤µÇµµ·Ï °³¼± ¿¹Á¤
 /// </summary>
 /// <returns></returns>
 std::string CLogger::getCurrentTime() const {
     auto now = std::chrono::system_clock::now();
     auto nowTime = std::chrono::system_clock::to_time_t(now);
     std::tm localTime;
-    // í˜„ì¬ ì‹œê°„ ì •ë³´ êµ¬ì¡°ì²´ë¥¼ ë¡œì»¬ì— ë³µì‚¬
+    // ÇöÀç ½Ã°£ Á¤º¸ ±¸Á¶Ã¼¸¦ ·ÎÄÃ¿¡ º¹»ç
     localtime_s(&localTime, &nowTime);
 
     char buffer[20];
@@ -202,5 +199,5 @@ CExcep::~CExcep()
 
 CExcep::CExcep(const CExcep& other)
 {
-    // ë³µì‚¬ ìƒì„±ì, ëª…ì‹œì ìœ¼ë¡œ ì •ì˜
+    // º¹»ç »ı¼ºÀÚ, ¸í½ÃÀûÀ¸·Î Á¤ÀÇ
 }

@@ -1,4 +1,4 @@
-ï»¿// CLogger.h
+// CLogger.h
 #ifndef CLogger_H
 #define CLogger_H
 
@@ -9,25 +9,16 @@
 #include <chrono>
 #include <sstream>
 
-// ë‚´ë³´ë‚´ê¸° ë§¤í¬ë¡œ ì •ì˜
-#ifdef _WIN32
-#ifdef BUILD_DLL
-#define DLLEXPORT __declspec(dllexport)
-#else
-#define DLLEXPORT __declspec(dllimport)
-#endif
-#else
-#define DLLEXPORT
-#endif
 
-// ë¡œê·¸ ì¢…ë¥˜ ì—´ê±°ì 
+
+// ·Î±× Á¾·ù ¿­°ÅÀÚ 
 enum class ELogLevel {
     LOG_DEBUG,
     LOG_INFO,
     LOG_WARNING,
     LOG_ERROR
 };
-class DLLEXPORT CLogger {
+class AFX_EXT_CLASS CLogger {
 public:
     static CLogger& getInstance();
 
@@ -37,7 +28,7 @@ public:
 private:
     CLogger();
     ~CLogger();
-    // í•´ë‹¹ í´ë˜ìŠ¤ëŠ” ì‹±ê¸€í†¤ íŒ¨í„´ì´ë¯€ë¡œ ë³µì‚¬ì™€ ëŒ€ì…ì„ ì°¨ë‹¨
+    // ÇØ´ç Å¬·¡½º´Â ½Ì±ÛÅæ ÆĞÅÏÀÌ¹Ç·Î º¹»ç¿Í ´ëÀÔÀ» Â÷´Ü
     CLogger(const CLogger&) = delete;
     CLogger& operator=(const CLogger&) = delete;
 
@@ -46,16 +37,16 @@ private:
     std::string getCurrentTime() const;
     std::string logLevelToString(ELogLevel eLogLevel);
 
-    std::string logFilename ="";
+    std::string logFilename = "";
     bool saveToFile = false;
     std::mutex logMutex;
 };
 
-// ì˜ˆì™¸ ë©”ì‹œì§€ í´ë˜ìŠ¤
-class DLLEXPORT CExcep {
+// ¿¹¿Ü ¸Ş½ÃÁö Å¬·¡½º
+class AFX_EXT_CLASS CExcep {
 public:
-    explicit CExcep(const std::string& msg); 
-    const std::string& what() const; 
+    explicit CExcep(const std::string& msg);
+    const std::string& what() const;
 
     CExcep();
     ~CExcep();
@@ -65,7 +56,7 @@ private:
     std::string message;
 };
 
-// ë¡œê·¸ ë§¤í¬ë¡œ : 
+// ·Î±× ¸ÅÅ©·Î : 
 
 #define LOG_INFO(message) CLogger::getInstance().logMessage(ELogLevel::LOG_INFO,message, __FUNCTION__, __FILE__, __LINE__)
 
