@@ -10,7 +10,6 @@
 #include <sstream>
 
 
-
 // 로그 종류 열거자 
 enum class ELogLevel {
     LOG_DEBUG,
@@ -23,8 +22,7 @@ public:
     static CLogger& getInstance();
 
     void configureLogging(const char* filename, bool enableFileLogging = true);
-    void logException(const std::string& message, const char* functionName, const char* fileName, int lineNumber);
-    void logMessage(ELogLevel eLoglevl, const std::string& message, const char* functionName, const char* fileName, int lineNumber);
+    void logMessage(ELogLevel eLoglevel, const std::string& message, const char* functionName, const char* fileName, int lineNumber);
 
 private:
     CLogger();
@@ -56,8 +54,15 @@ public:
 private:
     std::string message;
 };
-// 매크로 정의
-#define LOG_EXCEPTION(message) CLogger::getInstance().logException(message, __FUNCTION__, __FILE__, __LINE__)
-#define LOG_MESSAGE(logLevel, message) CLogger::getInstance().logMessage(logLevel,message, __FUNCTION__, __FILE__, __LINE__)
+
+// 로그 매크로 : 
+
+#define LOG_INFO(message) CLogger::getInstance().logMessage(ELogLevel::LOG_INFO,message, __FUNCTION__, __FILE__, __LINE__)
+
+#define LOG_DEBUG(message) CLogger::getInstance().logMessage(ELogLevel::LOG_DEBUG,message, __FUNCTION__, __FILE__, __LINE__)
+
+#define LOG_WARNING(message) CLogger::getInstance().logMessage(ELogLevel::LOG_WARNING,message, __FUNCTION__, __FILE__, __LINE__)
+
+#define LOG_ERROR(message) CLogger::getInstance().logMessage(ELogLevel::LOG_ERROR,message, __FUNCTION__, __FILE__, __LINE__)
 
 #endif // CLogger_H
