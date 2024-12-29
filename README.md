@@ -1,6 +1,8 @@
-# LoggerForDebug v1.01
+# LoggerForDebug v1.02
 ## 변경사항
-- 한글도 입력되도록 소스코드 인코딩 변경 ANSI -> UTF-8
+- MFC 동적 라이브러리 빌드 프로젝트 추가
+- Logger 소스코드만 따로 분리
+- Log 출력 방식 변경
 
 ## 개요
 - C++ 프로젝트에서 멀티쓰레드 런타임 환경에서 각 함수들을 디버깅 하기 위해서 만들었음. 
@@ -41,14 +43,14 @@ auto& logger = CLogger::getInstance();
 logger.configureLogging("debug_history.txt", true);
 }
 ```
-### 일반적인 로그 작성
+### 로그 작성 예시 
 ```cpp
-  LOG_MESSAGE(ELogLevel::LOG_DEBUG,"Another thread running.");
+LOG_DEBUG("This is DEBUG Log.");
+LOG_INFO("This is INFO Log.");
+LOG_WARNING("This is WARNING Log.");
+LOG_ERROR("This is ERROR Log.");
 ```
-| 파라메터 | 설명 |
-|--|--|
-|1. eLogLevel | 로그 카테고리 (참조 1)|
-|2. comment | 작성 할 내용|
+
 ### 예외 로그 작성 
 > 해당 기능은 `try, catch' 문에서 사용하는 것을 권장함.  
 ```cpp
@@ -61,10 +63,10 @@ logger.configureLogging("debug_history.txt", true);
        {
            // do anything
        }
-       LOG_MESSAGE(ELogLevel::LOG_DEBUG, "Next logic begin");
+       LOG_DEBUG("Next logic begin");
    }
    catch (const CException& e) {
-       LOG_EXCEPTION(e.what());  // throw 된 정보를 로그 형식으로 작성 
+       LOG_ERROR(e.what());  // throw 된 정보를 로그 형식으로 작성 
    }
 ```
 
@@ -74,3 +76,13 @@ logger.configureLogging("debug_history.txt", true);
 2. **LOG_INFO**: 연산 정보, 변수 정보 등을 작성할 때 사용
 3. **LOG_WARNING**: 프로그램 운용에 치명적이지 않으나, 주의를 요해야 할 때 사용
 4. **LOG_ERROR**: 예외 발생, 프로그램 운용에 치명적인 문제인 경우에 사용
+
+### 참조 2. 로그 종류별 텍스트 형상
+![image](https://github.com/user-attachments/assets/676f18e2-33f7-447b-8d16-ad9a5cc70811)  
+|번호|설명|
+|--|--|
+|1|로그출력 시간|
+|2|로그 종류|
+|3|로그 메시지|
+|4|로그가 출력된 소스코드 위치|
+
